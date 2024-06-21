@@ -1,0 +1,52 @@
+<?php
+// Connessione al database
+$conn = new mysqli("localhost", "root", "", "socialitis");
+
+// Verifica connessione
+if ($conn->connect_error) {
+    die("Connessione al database fallita: " . $conn->connect_error);
+}
+session_start();
+// Controlla se l'utente è loggato
+if (!isset($_SESSION['mioid'])) {
+    // Reindirizza l'utente alla pagina di accesso se non è loggato
+    header("Location: login.html");
+    exit();
+}
+else
+{
+    if (!isset($_POST))
+    {
+        echo 'error';
+        header("Location: main.php");
+        exit();
+    }
+    else
+    {
+    $post_id = $_POST['post_id']; 
+    $contenuto = $_POST['contenuto'];
+    $allowed_tags = '<a><h1><h2><abbr><acronym><address><b><blockquote><code><del><em><i><ins><li><ol><p><pre><span><strong><ul>';
+  
+// Rimuovi i tag HTML e PHP per evitare script dannosi
+$contenuto_safe = strip_tags($contenuto, $allowed_tags);
+
+// Rimuovi i tag specifici non desiderati
+$contenuto_safe = str_replace(['<br>', '<script>'], '', $contenuto_safe);
+    add_comment($post_id,$contenuto_safe);
+}
+}
+function add_comment($post_id,$contenuto)
+{
+$mio_id = $_SESSION['mioid'];
+global $conn;
+    // Inserisci il messaggio nel database
+    $sql_inserimento_commento = "INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)";
+    $stms_inserimento_commento = $conn->prepare($sql_inserimento_commento);
+    $stms_inserimento_commento->bind_param("iis", $post_id, $mio_id, $contenuto);
+    $stms_inserimento_commento->execute();
+    $stms_inserimento_commento->close(); 
+    $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+    header("Location:".  htmlspecialchars($referer));
+
+    exit();
+} 

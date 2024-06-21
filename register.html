@@ -1,0 +1,101 @@
+<style>
+    #grad1 {
+    padding:120px;
+  height: 1000px;
+  background-color: blue; /* For browsers that do not support gradients */
+  background-image: linear-gradient(to left top, red, rgb(0, 0, 255)); 
+align-items: center ;
+margin: auto;
+justify-content: center;
+width: 50%;
+text-align: center;
+}
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Modulo registrazione</title>
+   <!-- <script>
+        // Ottieni il parametro GET "error" dalla URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get("error");
+        // Se il parametro "error" è presente, mostra il messaggio di errore
+        if (error) {
+			alert(error);
+        }
+    </script>-->
+</head>
+<body id="grad1" style="text-align: center;">
+    <div class="register">
+        <h1>Modulo Registrazione</h1>
+        <form action="register.php" method="post" autocomplete="off" onsubmit="return validateForm()">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" placeholder="Nome" id="nome" required>
+            <br>
+            <br>
+            <label for="cognome">Cognome:</label>
+            <input type="text" name="cognome" placeholder="Cognome" id="cognome" required>
+            <br>
+            <br>
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="Username" id="username" required>
+            <br>
+            <br>
+            <label for="email">E-mail:</label>
+            <input type="text" name="email" placeholder="E-mail" id="email" required>
+            <br>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password" id="password" required>
+            <br>
+            <br>
+            <input type="submit" value="Register">
+            <br>
+        </form>
+    </div>
+    <div>Gi&agrave registrato?
+<a href="login.html" style="color: white;">Login</a>
+</div>
+
+
+    <script>
+        function validateForm() {
+            // Recupera i valori dai campi del modulo
+            var nome = document.getElementById("nome").value.trim();
+            var cognome = document.getElementById("cognome").value.trim();
+            var username = document.getElementById("username").value.trim();
+            var email = document.getElementById("email").value.trim();
+            var password = document.getElementById("password").value;
+
+            // Verifica se i campi nome e cognome sono vuoti
+            if (nome === "" || cognome === "") {
+                alert("Il nome e il cognome sono obbligatori");
+                return false; // Impedisce l'invio del modulo
+            }
+
+            // Verifica la validità dell'email
+            if (!isValidEmail(email)) {
+                alert("Indirizzo email non valido");
+                return false; // Impedisce l'invio del modulo
+            }
+
+            // Verifica la lunghezza della password
+            if (password.length < 8) {
+                alert("La password deve contenere almeno 8 caratteri");
+                return false; // Impedisce l'invio del modulo
+            }
+
+            // Se tutti i controlli hanno successo, il modulo può essere inviato
+            return true;
+        }
+
+        // Funzione per verificare la validità dell'email
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</script>
+</body>
+</html>

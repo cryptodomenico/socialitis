@@ -1,0 +1,49 @@
+<html >
+<title>Login</title>
+<style>
+	#grad1 {
+		padding:120px;
+	  height: 1000px;
+	  background-color: blue; /* For browsers that do not support gradients */
+	  background-image: linear-gradient(to left top, red, rgb(0, 0, 255)); 
+align-items: center ;
+margin: auto;
+justify-content: center;
+width: 50%;
+text-align: center;
+	}
+	</style>
+<h1 style="text-align:center">Login</h1>
+<body id="grad1" style="text-align: center;">
+	<script>
+        // Ottieni il parametro GET "error" dalla URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get("error");
+        // Se il parametro "error" è presente, mostra il messaggio di errore
+        if (error) {
+			alert(error);
+        }
+    </script>
+	<script>
+		function removeSpaces() {
+			var inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+			inputs.forEach(function(input) {
+				input.value = input.value.trim();
+			});
+		}
+		</script>
+	<form action="autenticazione.php" method="post"  onsubmit="removeSpaces()">
+				<label for="username">Username:</label>
+				<input type="text" name="username" placeholder="Username" id="username" required><br>
+				<br>
+				<label for="password">Password:&nbsp;</label>
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<br>
+				<br>
+				<input type="submit" value="Login">
+			</form>
+			<br>
+			Nuovo utente?
+			<a href="register.html" style="color:white">Registrati</a>
+</body>
+</html>
